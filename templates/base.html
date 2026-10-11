@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080c12">
+  <title>{% block title %}CampusSignal{% endblock %} · CampusSignal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<div class="app-shell">
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="{{ url_for('dashboard') }}"><span class="brand-mark"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 3 34 9v10c0 9-5.8 14.5-14 18C11.8 33.5 6 28 6 19V9z"/><path d="m13 20 4.5 4.5L27 15"/></svg></span><span><b>campus<span>signal</span></b><small>THREAT INTELLIGENCE</small></span></a>
+    <div class="workspace-label">WORKSPACE <span class="live-dot"></span></div>
+    <nav class="nav-group">
+      <a class="nav-link {% if request.endpoint == 'dashboard' %}active{% endif %}" href="{{ url_for('dashboard') }}"><span class="nav-icon">⌂</span> Overview <span class="nav-shortcut">01</span></a>
+      <a class="nav-link {% if request.endpoint in ['reports','report_detail'] %}active{% endif %}" href="{{ url_for('reports') }}"><span class="nav-icon">▤</span> Reports</a>
+      <a class="nav-link {% if request.endpoint == 'campaigns_page' %}active{% endif %}" href="{{ url_for('campaigns_page') }}"><span class="nav-icon">⌘</span> Campaign intelligence</a>
+      <a class="nav-link {% if request.endpoint == 'audit' %}active{% endif %}" href="{{ url_for('audit') }}"><span class="nav-icon">◷</span> Audit trail</a>
+    </nav>
+    <div class="sidebar-bottom">
+      <div class="privacy-card"><div class="privacy-icon">◇</div><div><b>Privacy-first by design</b><p>Personal contact details are redacted before storage.</p></div></div>
+      <div class="sidebar-user"><div class="avatar">CS</div><div><b>Campus workspace</b><small>Local prototype</small></div><span class="more">···</span></div>
+    </div>
+  </aside>
+  <main class="main-area">
+    <header class="topbar"><button class="mobile-menu" id="mobileMenu" aria-label="Open navigation">☰</button><div class="breadcrumb"><span>WORKSPACE</span><i>/</i><b>{% block breadcrumb %}Overview{% endblock %}</b></div><div class="top-actions"><span class="environment"><span class="live-dot"></span> SYSTEM ONLINE</span><a class="button button-primary button-small" href="{{ url_for('new_report') }}"><span>＋</span> New report</a></div></header>
+    <div class="content-wrap">
+      {% with messages = get_flashed_messages(with_categories=true) %}{% if messages %}<div class="flash-stack">{% for category, message in messages %}<div class="flash {{ category }}">{{ message }}<button class="flash-close" onclick="this.parentElement.remove()">×</button></div>{% endfor %}</div>{% endif %}{% endwith %}
+      {% block content %}{% endblock %}
+      <footer class="footer"><span>CampusSignal <span class="footer-muted">/ Privacy-preserving campus scam correlation</span></span><span><span class="live-dot"></span> LOCAL INSTANCE <span class="footer-muted">· v0.1.0</span></span></footer>
+    </div>
+  </main>
+</div>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+{% block scripts %}{% endblock %}
+</body></html>

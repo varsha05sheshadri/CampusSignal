@@ -1,0 +1,1 @@
+Optional next step: add pytest coverage for report submission, redaction, grouping, and status transitions.
