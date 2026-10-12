@@ -58,3 +58,5 @@ python app.py
 2. Improve indicator normalization and explainable similarity scoring, with synthetic test data and precision/recall evaluation.
 3. Add evidence snapshots and stronger audit attribution.
 4. Add pytest coverage and Docker/Compose.
+    
+    Jenkins automatic polling test.
